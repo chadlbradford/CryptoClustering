@@ -1,100 +1,83 @@
-Crypto Clustering - README
+# Clustering - README
 
-Overview
+## Overview
 
-This project applies Principal Component Analysis (PCA) and K-Means Clustering to group cryptocurrencies based on their historical price changes. The goal is to identify patterns in cryptocurrency movements and understand which coins behave similarly over time.
+This project applies **Principal Component Analysis (PCA)** and **K-Means Clustering** to group cryptocurrencies based on their historical price changes. The goal is to identify patterns in cryptocurrency movements and understand which coins behave similarly over time.
 
-Dataset
+## Dataset
 
 The dataset consists of historical percentage changes in cryptocurrency prices over various timeframes:
 
-price_change_percentage_24h
+- **price\_change\_percentage\_24h**
+- **price\_change\_percentage\_7d**
+- **price\_change\_percentage\_14d**
+- **price\_change\_percentage\_30d**
+- **price\_change\_percentage\_60d**
+- **price\_change\_percentage\_200d**
+- **price\_change\_percentage\_1y**
 
-price_change_percentage_7d
+### Preprocessing
 
-price_change_percentage_14d
+- Data is **scaled** using **StandardScaler** to ensure uniformity across features.
+- **PCA (Principal Component Analysis)** is applied to reduce the data dimensions while preserving the majority of variance.
+- The explained variance of the top three principal components is calculated to assess how much information is retained.
 
-price_change_percentage_30d
+## Clustering Approach
 
-price_change_percentage_60d
+### **1. Elbow Method for Optimal k Selection**
 
-price_change_percentage_200d
+- The **Elbow Method** is used to determine the optimal number of clusters.
+- K-Means clustering is applied using the optimal **k-value** identified.
 
-price_change_percentage_1y
+### **2. K-Means Clustering**
 
-Preprocessing
+- The model is initialized with `n_clusters=k`, where **k is determined from the Elbow Curve**.
+- The model is **trained on the PCA-transformed data**.
+- Each cryptocurrency is assigned to a **cluster** based on the PCA-transformed features.
 
-Data is scaled using StandardScaler to ensure uniformity across features.
+## Results & Visualization
 
-PCA (Principal Component Analysis) is applied to reduce the data dimensions while preserving the majority of variance.
+### **1. Feature Influence on Principal Components**
 
-The explained variance of the top three principal components is calculated to assess how much information is retained.
+- The PCA component weights show the **strongest positive and negative influences** of each feature on PC1, PC2, and PC3.
+- Example influences:
+  - **PC1:** Highest positive: `price_change_percentage_200d`, Highest negative: `price_change_percentage_24h`
+  - **PC2:** Highest positive: `price_change_percentage_14d`, Highest negative: `price_change_percentage_1y`
+  - **PC3:** Highest positive: `price_change_percentage_7d`, Highest negative: `price_change_percentage_60d`
 
-Clustering Approach
+### **2. Scatter Plot of PCA Components**
 
-1. Elbow Method for Optimal k Selection
+- Cryptocurrencies are visualized on a **scatter plot of PCA1 vs. PCA2**.
+- Data points are color-coded by their assigned cluster, revealing **distinct groups of cryptocurrencies**.
 
-The Elbow Method is used to determine the optimal number of clusters.
+## How to Run the Code
 
-K-Means clustering is applied using the optimal k-value identified.
+1. Ensure all dependencies are installed:
+   ```bash
+   - pip install pandas scikit-learn matplotlib
 
-2. K-Means Clustering
+   Run the Python script or Jupyter Notebook containing the clustering workflow.
 
-The model is initialized with n_clusters=k, where k is determined from the Elbow Curve.
+## Review the output:
 
-The model is trained on the PCA-transformed data.
+  - Cluster assignments for each cryptocurrency
 
-Each cryptocurrency is assigned to a cluster based on the PCA-transformed features.
+  - PCA weight contributions
 
-Results & Visualization
+  - Visualizations of the clustered data
 
-1. Feature Influence on Principal Components
-
-The PCA component weights show the strongest positive and negative influences of each feature on PC1, PC2, and PC3.
-
-Example influences:
-
-PC1: Highest positive: price_change_percentage_200d, Highest negative: price_change_percentage_24h
-
-PC2: Highest positive: price_change_percentage_14d, Highest negative: price_change_percentage_1y
-
-PC3: Highest positive: price_change_percentage_7d, Highest negative: price_change_percentage_60d
-
-2. Scatter Plot of PCA Components
-
-Cryptocurrencies are visualized on a scatter plot of PCA1 vs. PCA2.
-
-Data points are color-coded by their assigned cluster, revealing distinct groups of cryptocurrencies.
-
-How to Run the Code
-
-Ensure all dependencies are installed:
-
-pip install pandas scikit-learn matplotlib
-
-Run the Python script or Jupyter Notebook containing the clustering workflow.
-
-Review the output:
-
-Cluster assignments for each cryptocurrency
-
-PCA weight contributions
-
-Visualizations of the clustered data
-
-Conclusion
+## Conclusion
 
 This project demonstrates how PCA and K-Means clustering can be used to categorize cryptocurrencies based on price movements. The clustering results help identify groups of cryptocurrencies that behave similarly, providing insights for investors and analysts.
 
-Future Improvements:
+## Future Improvements:
 
-Experiment with different numbers of PCA components.
+  - Experiment with different numbers of PCA components.
 
-Compare K-Means with other clustering techniques (e.g., Hierarchical Clustering, DBSCAN).
+  - Compare K-Means with other clustering techniques (e.g., Hierarchical Clustering, DBSCAN).
 
-Incorporate additional features, such as market capitalization and trading volume.
+  - Incorporate additional features, such as market capitalization and trading volume.
 
-Reference
+## Reference
 
 Original self-sourced code vetted and debugged with ChatGPT.
-
